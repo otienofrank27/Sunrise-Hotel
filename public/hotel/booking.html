@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reserve Your Room &amp; Instant Billing - Sunrise Hotel</title>
+  <meta name="description" content="Online room reservation with real-time bill calculation, capacity validation, and individual room selection across 76 suites at Sunrise Hotel.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Top Bar Contract -->
+  <header class="header">
+    <div class="nav-container">
+      <a href="index.html" class="brand-mark">
+        <span class="brand-title">Sunrise Hotel</span>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="booking.html" class="active">Room Reservation</a></li>
+          <li><a href="index.html#accommodations">76 Rooms Catalog</a></li>
+          <li><a href="index.html#location">Contact</a></li>
+        </ul>
+      </nav>
+      <div>
+        <a href="index.html" class="btn-nav">Return Home</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Booking View: Form + Live Folio Ledger -->
+    <div class="booking-view-layout">
+      <!-- Main Reservation Form -->
+      <section class="form-shell">
+        <div class="form-title-group">
+          <h2>Reservation &amp; Billing Statement</h2>
+          <p>Select your preferred room from our 76 individual rooms, enter guest details, and choose additional services.</p>
+        </div>
+
+        <form id="booking-form" action="process_booking.php" method="POST" novalidate>
+          <!-- Section 1: Personal Details -->
+          <div class="form-group-title">
+            <span>01.</span> Primary Guest Information
+          </div>
+
+          <div class="input-row">
+            <div class="field">
+              <label for="customer_name">Full Name <span class="required">*</span></label>
+              <input type="text" id="customer_name" name="customer_name" class="form-input" placeholder="e.g. Marvin Frank" required>
+              <div id="name-error" class="error-text"></div>
+            </div>
+
+            <div class="field">
+              <label for="id_number">National ID / Passport Number <span class="required">*</span></label>
+              <input type="text" id="id_number" name="id_number" class="form-input" placeholder="e.g. 123456789" required>
+              <div id="id-error" class="error-text"></div>
+            </div>
+          </div>
+
+          <div class="input-row">
+            <div class="field">
+              <label for="email">Email Address <span class="required">*</span></label>
+              <input type="email" id="email" name="email" class="form-input" placeholder="e.g. marvinfrank2680@gmail.com" required>
+              <div id="email-error" class="error-text"></div>
+            </div>
+
+            <div class="field">
+              <label for="phone">Phone Number (10 Digits) <span class="required">*</span></label>
+              <input type="tel" id="phone" name="phone" class="form-input" placeholder="e.g. 0748642275" maxlength="10" required>
+              <div class="field-help">Enter 10 numerical digits (e.g. 0712345678)</div>
+              <div id="phone-error" class="error-text"></div>
+            </div>
+          </div>
+
+          <!-- Section 2: Stay & Accommodation Details -->
+          <div class="form-group-title">
+            <span>02.</span> Room Selection (76 Rooms Available) &amp; Duration
+          </div>
+
+          <div class="input-row">
+            <div class="field">
+              <label for="check_in_date">Check-in Date <span class="required">*</span></label>
+              <input type="date" id="check_in_date" name="check_in_date" class="form-input" required>
+              <div id="checkin-error" class="error-text"></div>
+            </div>
+
+            <div class="field">
+              <label for="nights">Number of Nights (1 &ndash; 14) <span class="required">*</span></label>
+              <input type="number" id="nights" name="nights" class="form-input" min="1" max="14" value="1" required>
+              <div class="field-help">Allowed stay length: 1 to 14 nights</div>
+              <div id="nights-error" class="error-text"></div>
+            </div>
+          </div>
+
+          <div class="input-row">
+            <div class="field">
+              <label for="room_type">
+                Room Category <span class="required">*</span>
+                <span id="capacity-info" style="color: var(--secondary); font-weight: 600; margin-left: 0.5rem;"></span>
+              </label>
+              <select id="room_type" name="room_type" class="form-select" required>
+                <option value="">-- Select Room Category --</option>
+                <option value="Single">Single Room (KSh 3,500/night - Max 1 Guest)</option>
+                <option value="Double">Double Room (KSh 5,000/night - Max 2 Guests)</option>
+                <option value="Family">Family Room (KSh 7,500/night - Max 4 Guests)</option>
+                <option value="Executive">Executive Room (KSh 10,000/night - Max 2 Guests)</option>
+              </select>
+              <div id="room-error" class="error-text"></div>
+            </div>
+
+            <!-- Specific Individual Room Selector (76 Rooms Inventory) -->
+            <div class="field">
+              <label for="specific_room_no">Select Specific Room Number (76 Rooms):</label>
+              <select id="specific_room_no" name="specific_room_no" class="form-select">
+                <option value="104">Room 104 - Ground Floor Garden Single</option>
+                <option value="101">Room 101 - Ground Floor Courtyard Single</option>
+                <option value="108">Room 108 - Ground Floor Quiet Single</option>
+                <option value="112">Room 112 - Ground Floor Garden Terrace Double</option>
+                <option value="116">Room 116 - Ground Floor Garden Terrace Double</option>
+                <option value="201">Room 201 - 1st Floor Ocean Terrace Double</option>
+                <option value="204" selected>Room 204 - 1st Floor Deluxe Ocean Double</option>
+                <option value="208">Room 208 - 1st Floor Balcony Double</option>
+                <option value="218">Room 218 - 1st Floor Ocean Panorama Double</option>
+                <option value="301">Room 301 - 2nd Floor Family Suite A</option>
+                <option value="306">Room 306 - 2nd Floor Executive Family Suite</option>
+                <option value="312">Room 312 - 2nd Floor Family Terrace Suite</option>
+                <option value="320">Room 320 - 2nd Floor Ocean Horizon Family Suite</option>
+                <option value="402">Room 402 - Penthouse Ocean Suite</option>
+                <option value="405">Room 405 - Penthouse Sunset Suite</option>
+                <option value="408">Room 408 - Presidential Royal Villa Suite</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-row">
+            <div class="field">
+              <label for="guests">Number of Guests <span class="required">*</span></label>
+              <input type="number" id="guests" name="guests" class="form-input" min="1" max="10" value="1" required>
+              <div id="guests-error" class="error-text"></div>
+            </div>
+          </div>
+
+          <!-- Dynamic Capacity Warning (Task 3) -->
+          <div id="capacity-warning" class="capacity-alert">
+            <span style="font-size: 1.2rem;">&#9888;</span>
+            <span id="capacity-warning-text"></span>
+          </div>
+
+          <!-- Section 3: Extra Hotel Services (Automatically adds charges when chosen) -->
+          <div class="form-group-title">
+            <span>03.</span> Personalized Enhancements
+          </div>
+
+          <!-- Breakfast Buffet -->
+          <label class="service-toggle-card" for="breakfast">
+            <input type="checkbox" id="breakfast" name="breakfast" value="yes">
+            <div class="service-info">
+              <div class="service-header-row">
+                <span class="service-name">Daily Gourmet Breakfast Buffet</span>
+                <span class="service-rate">+ KSh 700 / guest / day</span>
+              </div>
+              <div class="service-subtext">Warm coastal Swahili buffet and continental spread served fresh every morning.</div>
+            </div>
+          </label>
+
+          <!-- Airport Transfer -->
+          <label class="service-toggle-card" for="airport_transfer">
+            <input type="checkbox" id="airport_transfer" name="airport_transfer" value="yes">
+            <div class="service-info">
+              <div class="service-header-row">
+                <span class="service-name">Chauffeured Airport Transfer</span>
+                <span class="service-rate">+ KSh 2,000 flat fee</span>
+              </div>
+              <div class="service-subtext">Dedicated direct transfer to and from Sunrise Hotel in our executive vehicle.</div>
+            </div>
+          </label>
+
+          <!-- Dynamic Flight Details Container (Task 3) -->
+          <div id="transfer-details-box">
+            <div class="field" style="margin-bottom: 0;">
+              <label for="flight_details" style="color: #1e40af;">Flight Details &amp; Scheduled Arrival Time (Optional):</label>
+              <input type="text" id="flight_details" name="flight_details" class="form-input" placeholder="e.g. Flight KQ 102 arriving at 14:30">
+              <div class="field-help" style="color: #2563eb;">Our chauffeur will be stationed at Arrivals holding a personalized name board.</div>
+            </div>
+          </div>
+
+          <!-- Laundry Service (Individualization Requirement #4: KSh 1,000) -->
+          <label class="service-toggle-card" for="laundry" style="border-color: #a7f3d0; background-color: #f0fdf4;">
+            <input type="checkbox" id="laundry" name="laundry" value="yes">
+            <div class="service-info">
+              <div class="service-header-row">
+                <span class="service-name" style="color: #065f46;">Express Valet Laundry Service (Rule #4)</span>
+                <span class="service-rate" style="color: #059669;">+ KSh 1,000 flat fee</span>
+              </div>
+              <div class="service-subtext">Full garment basket wash, steam press, and 6-hour rapid return.</div>
+            </div>
+          </label>
+
+          <!-- Hidden Input for verification tracking -->
+          <input type="hidden" id="client_total" name="client_total" value="0">
+
+          <!-- Validation Error Notice Banner -->
+          <div id="submit-error-alert" style="display: none; padding: 1rem; background-color: var(--error-bg); border: 1px solid #fecaca; border-radius: var(--radius-sm); margin-bottom: 1.25rem; font-size: 0.85rem; color: var(--error);">
+            <div style="font-weight: 700; margin-bottom: 0.25rem;">&#9888; Action Required: Missing Information</div>
+            <div id="submit-error-alert-text">Please complete all required fields above before submitting.</div>
+          </div>
+
+          <!-- Submit Buttons -->
+          <div class="form-buttons">
+            <button type="submit" class="btn-submit-booking" id="btn-submit-booking">
+              Confirm &amp; Submit Booking &rarr;
+            </button>
+            <button type="reset" class="btn-reset-booking" id="btn-reset-form">
+              Reset
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Live Folio Ledger (Task 4 Bill Calculator - Automatically adds room and services) -->
+      <aside class="folio-card">
+        <div class="folio-header">
+          <h3>Estimated Folio</h3>
+          <p>Real-Time Dynamic Billing Statement</p>
+        </div>
+
+        <div class="folio-body">
+          <div class="folio-row">
+            <span class="folio-label">Suite Type:</span>
+            <span class="folio-val" id="bill-room-type">None Selected</span>
+          </div>
+
+          <div class="folio-row">
+            <span class="folio-label">Rate &amp; Duration:</span>
+            <span class="folio-val" id="bill-room-rate">-</span>
+          </div>
+
+          <div class="folio-row">
+            <span class="folio-label">Room Subtotal:</span>
+            <span class="folio-val" id="bill-room-subtotal">KSh 0</span>
+          </div>
+
+          <div class="folio-row" id="bill-breakfast-row" style="display: none;">
+            <span class="folio-label">Breakfast Buffet:</span>
+            <span class="folio-val" id="bill-breakfast-subtotal">KSh 0</span>
+          </div>
+
+          <div class="folio-row" id="bill-transfer-row" style="display: none;">
+            <span class="folio-label">Airport Transfer:</span>
+            <span class="folio-val" id="bill-transfer-subtotal">KSh 0</span>
+          </div>
+
+          <div class="folio-row" id="bill-laundry-row" style="display: none;">
+            <span class="folio-label">Laundry Valet:</span>
+            <span class="folio-val" id="bill-laundry-subtotal">KSh 0</span>
+          </div>
+
+          <div class="folio-total">
+            <span class="folio-total-label">TOTAL AMOUNT:</span>
+            <span class="folio-total-val" id="bill-total-amount">KSh 0</span>
+          </div>
+
+          <div style="margin-top: 1.5rem; padding: 1rem; background-color: #f8fafc; border-radius: var(--radius-sm); font-size: 0.8rem; color: #64748b; line-height: 1.6;">
+            <strong>Automated Folio:</strong><br>
+            Rates and chosen services automatically calculate and update live on every selection.
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-copy">
+      &copy; 2026 Sunrise Hotel. Prototype Online Hotel Room Booking &amp; Billing System.
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
