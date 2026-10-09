@@ -1,0 +1,6 @@
+{
+  "name": "Sunrise Hotel Booking & Billing System",
+  "description": "Online room reservation, dynamic billing calculator, validation, and PHP booking confirmation system for Sunrise Hotel.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
